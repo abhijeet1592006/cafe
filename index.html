@@ -1,0 +1,196 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lofi Cafe Connect</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "peerjs": "https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="theme-toggle" class="theme-toggle">
+        <svg viewBox="0 0 24 24" width="18" height="18">
+            <path fill="currentColor" d="M9.37 5.51c-.18.64-.27 1.31-.27 1.99 0 4.08 3.32 7.4 7.4 7.4.68 0 1.35-.09 1.99-.27C17.45 17.19 14.93 19 12 19c-3.86 0-7-3.14-7-7 0-2.93 1.81-5.45 4.37-6.49zM12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path>
+        </svg>
+    </button>
+    <div class="container">
+        <header>
+            <h1>LOFI CAFE</h1>
+            <div class="cafe-illustration">
+                <!-- Illustration could go here -->
+            </div>
+        </header>
+        
+        <main>
+            <!-- Home Page -->
+            <div id="home-page" class="page">
+                <div class="welcome-section">
+                    <h2>welcome to lofi cafe</h2>
+                    <p>a cozy place to chat with friends while enjoying virtual coffee</p>
+                    <button id="go-to-connect-btn" class="btn">start connecting</button>
+                </div>
+            </div>
+            
+            <!-- Connection Page -->
+            <div id="connection-page" class="page hidden">
+                <div class="connection-panel">
+                    <div id="initial-view">
+                        <h2>connect with others</h2>
+                        <button id="create-room-btn" class="btn">create a room</button>
+                        <div class="or-divider">
+                            <span>or</span>
+                        </div>
+                        <div class="join-form">
+                            <input type="text" id="room-code-input" placeholder="enter 3-digit code" maxlength="3">
+                            <button id="join-room-btn" class="btn">join</button>
+                        </div>
+                        <button id="back-to-home-btn" class="btn secondary-btn">back to home</button>
+                    </div>
+
+                    <div id="room-view" class="hidden">
+                        <div id="room-info">
+                            <h2>your room code:</h2>
+                            <div id="room-code">...</div>
+                            <p>share this code with others to connect</p>
+                            <div id="coin-display">1000 coins</div>
+                            <button id="menu-btn" class="menu-button">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3V5z"></path>
+                                </svg>
+                                Open Menu
+                            </button>
+                        </div>
+                        <div id="connection-status"></div>
+                        
+                        <div class="cafe-table-container">
+                            <div class="cafe-table">
+                                <div class="table-pattern"></div>
+                                <div id="table-items" class="table-items">
+                                    <div class="food-arrangement">
+                                        <div class="food-slot top-left"></div>
+                                        <div class="food-slot top-right"></div>
+                                        <div class="food-slot center"></div>
+                                        <div class="food-slot bottom-left"></div>
+                                        <div class="food-slot bottom-right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-legs">
+                                <div class="leg"></div>
+                                <div class="leg"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="video-container" class="hidden">
+                            <div class="video-frame">
+                                <video id="local-video" autoplay muted playsinline></video>
+                                <div class="video-overlay">You</div>
+                            </div>
+                            <div class="video-frame">
+                                <video id="remote-video" autoplay playsinline></video>
+                                <div class="video-overlay">Friend</div>
+                            </div>
+                            <div class="video-controls">
+                                <button id="toggle-video-btn" class="video-control-btn">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M15 8v8H5V8h10m1-2H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4V7c0-.55-.45-1-1-1z"/>
+                                    </svg>
+                                    Turn Off
+                                </button>
+                                <button id="toggle-audio-btn" class="video-control-btn">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="currentColor" d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                                    </svg>
+                                    Mute
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="chat-area" class="hidden">
+                            <div id="messages"></div>
+                            <div class="message-input">
+                                <input type="text" id="message-input" placeholder="type a message... (use /share [item] to share food)">
+                                <button id="send-btn" class="btn">send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Menu Book -->
+            <div id="menu-book" class="menu-book">
+                <div class="book-spine"></div>
+                <div class="book-cover">
+                    <h2 class="menu-title">Café Menu</h2>
+                    <button id="close-menu" class="close-menu">×</button>
+                    <div class="menu-grid">
+                        <div class="menu-item" data-item="Croissant" data-price="150">
+                            <div class="item-price">150 coins</div>
+                            <svg width="40" height="40" viewBox="0 0 24 24">
+                                <path fill="#e6c77b" d="M22,19H2v-2h20V19z M2,5h20v2H2V5z M2,8h20v2H2V8z M2,12h20v2H2V12z M2,15h20v2H2V15z"/>
+                            </svg>
+                            <div class="item-name">Croissant</div>
+                            <div class="item-tooltip">A buttery, flaky pastry</div>
+                        </div>
+                        <div class="menu-item" data-item="Cake" data-price="200">
+                            <div class="item-price">200 coins</div>
+                            <svg width="40" height="40" viewBox="0 0 24 24">
+                                <path fill="#f8d7da" d="M12,6C8.1,6,5,8.5,5,12c0,3.5,3.1,6,7,6s7-2.5,7-6C19,8.5,15.9,6,12,6z"/>
+                                <path fill="#e66465" d="M12,2L12,2c-5.5,0-10,4-10,9v1h20v-1C22,6,17.5,2,12,2z"/>
+                            </svg>
+                            <div class="item-name">Cake Slice</div>
+                            <div class="item-tooltip">Sweet strawberry cake</div>
+                        </div>
+                        <div class="menu-item" data-item="Cookie" data-price="100">
+                            <div class="item-price">100 coins</div>
+                            <svg width="40" height="40" viewBox="0 0 24 24">
+                                <circle fill="#cd9b5a" cx="12" cy="12" r="10"/>
+                                <circle fill="#3a290e" cx="8" cy="9" r="1.5"/>
+                                <circle fill="#3a290e" cx="15" cy="8" r="1.5"/>
+                                <circle fill="#3a290e" cx="10" cy="14" r="1.5"/>
+                                <circle fill="#3a290e" cx="16" cy="14" r="1.5"/>
+                            </svg>
+                            <div class="item-name">Chocolate Chip Cookie</div>
+                            <div class="item-tooltip">Freshly baked cookie</div>
+                        </div>
+                        <div class="menu-item" data-item="Sandwich" data-price="250">
+                            <div class="item-price">250 coins</div>
+                            <svg width="40" height="40" viewBox="0 0 24 24">
+                                <path fill="#e8c992" d="M2,5h20v3H2V5z"/>
+                                <path fill="#6a994e" d="M2,8h20v1H2V8z"/>
+                                <path fill="#d7816a" d="M2,9h20v1H2V9z"/>
+                                <path fill="#6a994e" d="M2,10h20v1H2V10z"/>
+                                <path fill="#e8c992" d="M2,11h20v3H2V11z"/>
+                            </svg>
+                            <div class="item-name">Veggie Sandwich</div>
+                            <div class="item-tooltip">Fresh and healthy</div>
+                        </div>
+                        <div class="menu-item" data-item="Donut" data-price="150">
+                            <div class="item-price">150 coins</div>
+                            <svg width="40" height="40" viewBox="0 0 24 24">
+                                <circle fill="#e8c992" cx="12" cy="12" r="10"/>
+                                <circle fill="#ffffff" cx="12" cy="12" r="3"/>
+                                <path fill="#ff99c8" d="M12,2C7.582,2,4,5.582,4,10c0,4.418,3.582,8,8,8V1.73L4,6.55C4,5.68,5.18,5,6.73,5H17.27C18.82,5,20,5.68,20,6.55v3.45z"/>
+                            </svg>
+                            <div class="item-name">Strawberry Donut</div>
+                            <div class="item-tooltip">Sweet and fluffy treat</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-page-shadow"></div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>grab a virtual coffee & chat ☕</p>
+        </footer>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
